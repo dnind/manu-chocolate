@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MANU BARK CHOCOLATE</title>
     <style>
-        /* 네 디자인의 감성을 살린 폰트와 배경색 */
         body {
             margin: 0;
-            background-color: #e5e2d9; 
+            background-color: #e5e2d9; /* 외부 배경색 */
             font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
@@ -17,133 +16,78 @@
 
         .container {
             width: 380px;
-            background: #f3f0e7;
-            border: 1px solid #b5b0a3;
+            background: #f3f0e7; /* 내부 배경색 */
+            border: 1.5px solid #b5b0a3;
             padding: 30px 20px;
             text-align: center;
-            position: relative;
         }
 
-        /* 메인 타이틀 디자인 */
-        .header h1 { font-size: 45px; margin: 0; letter-spacing: 8px; font-weight: 900; }
-        .header p { font-size: 15px; margin: 5px 0 25px; letter-spacing: 2px; border-bottom: 1.5px solid #000; display: inline-block; padding-bottom: 3px; }
+        .header h1 { font-size: 45px; margin: 0; letter-spacing: 8px; font-weight: 900; color: #000; }
+        .header p { font-size: 15px; margin: 5px 0 25px; letter-spacing: 2px; border-bottom: 2.5px solid #000; display: inline-block; padding-bottom: 3px; }
 
-        .section-title { font-size: 18px; text-align: left; margin: 15px 0 10px; font-weight: bold; }
+        .section-title { font-size: 18px; text-align: left; margin: 15px 0 10px; font-weight: bold; padding-left: 5px; }
         
+        /* ✨ 박스 안쪽도 동일한 색으로 수정 (#f3f0e7) */
         .selection-box {
             border: 1px solid #b5b0a3;
-            border-radius: 10px;
-            padding: 15px 5px;
+            border-radius: 12px;
+            padding: 20px 5px;
             margin-bottom: 20px;
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
-            background: #fff;
+            background: #f3f0e7; /* 기존 흰색에서 수정됨 */
         }
 
-        /* 예시 디자인의 이미지를 버튼으로 활용 */
         .item {
             width: 30%;
             cursor: pointer;
             margin-bottom: 10px;
             position: relative;
-            transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .item img { width: 75px; height: 75px; object-fit: contain; filter: grayscale(20%); }
-        .item p { font-size: 11px; margin-top: 5px; font-weight: bold; color: #333; }
+        .item img { 
+            width: 80px; 
+            height: 80px; 
+            object-fit: contain; 
+            pointer-events: none; 
+            transition: transform 0.2s;
+        }
 
-        /* 선택 시 활성화 효과 */
-        .item.active img { filter: grayscale(0%); transform: scale(1.05); }
+        .item p { font-size: 11px; margin-top: 8px; font-weight: bold; color: #333; pointer-events: none; }
+
+        /* ✅ 선택 시 효과 */
+        .item.active img { transform: scale(1.1); }
         .item.active::after {
-            content: '●';
+            content: '✔';
             position: absolute;
-            top: -5px; right: 15px;
-            color: #d32f2f; font-size: 14px;
+            top: -10px; right: 5px;
+            background: #000; color: #fff;
+            width: 22px; height: 22px;
+            border-radius: 50%; font-size: 12px; line-height: 22px;
         }
 
         .order-btn {
             margin-top: 20px;
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: #000;
             color: #fff;
             border: none;
             font-weight: bold;
             letter-spacing: 3px;
             cursor: pointer;
+            font-size: 16px;
         }
 
-        .insta-id { margin-top: 25px; font-size: 13px; color: #555; }
+        .insta-id { margin-top: 30px; font-size: 13px; color: #555; letter-spacing: 1px; }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <div class="header">
-            <h1>MANU</h1>
-            <p>BARK CHOCOLATE</p>
         </div>
-
-        <div class="section-title">〈 BASE 〉</div>
-        <div class="selection-box" id="baseSection">
-            <div class="item" onclick="selectBase('dark', this)">
-                <img src="images/dark.png" alt="Dark">
-                <p>DARK</p>
-            </div>
-            <div class="item" onclick="selectBase('strawberry', this)">
-                <img src="images/strawberry.png" alt="Strawberry">
-                <p>STRAW BERRY</p>
-            </div>
-            <div class="item" onclick="selectBase('white', this)">
-                <img src="images/white.png" alt="White">
-                <p>WHITE</p>
-            </div>
-        </div>
-
-        <div class="section-title">〈 TOPPING 〉</div>
-        <div class="selection-box" id="toppingSection">
-            <div class="item" onclick="toggleTopping('oreo', this)">
-                <img src="images/oreo.png" alt="Oreo">
-                <p>OREO</p>
-            </div>
-            <div class="item" onclick="toggleTopping('lotus', this)">
-                <img src="images/lotus.png" alt="Lotus">
-                <p>LOTUS</p>
-            </div>
-            <div class="item" onclick="toggleTopping('marshmallow', this)">
-                <img src="images/marshmallow.png" alt="Marshmallow">
-                <p>MARSHMALLOW</p>
-            </div>
-            <div class="item" onclick="toggleTopping('pretzel', this)">
-                <img src="images/pretzel.png" alt="Pretzel">
-                <p>PRETZEL</p>
-            </div>
-            <div class="item" onclick="toggleTopping('nuts', this)">
-                <img src="images/nuts.png" alt="Nuts">
-                <p>NUTS</p>
-            </div>
-        </div>
-
-        <button class="order-btn" onclick="sendOrder()">ORDER NOW</button>
-        
-        <div class="insta-id">@ lo_ong._</div>
-    </div>
-
-    <script>
-        let base = '';
-        let toppings = [];
-
-        function selectBase(val, el) {
-            base = val;
-            document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        function toggleTopping(val, el) {
-            const idx = toppings.indexOf(val);
-            if (idx > -1) {
-                toppings.splice(idx, 1);
-                el.classList.remove('active');
-            } else {
-                toppings.push
+</body>
+</html>
