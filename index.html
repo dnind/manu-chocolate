@@ -7,7 +7,7 @@
     <style>
         body { margin: 0; background-color: #e5e2d9; font-family: 'Arial', sans-serif; display: flex; justify-content: center; padding: 40px 0; }
         .container { width: 380px; background: #f3f0e7; border: 1.5px solid #b5b0a3; padding: 30px 20px; text-align: center; }
-        .header h1 { font-size: 45px; margin: 0; letter-spacing: 8px; font-weight: 900; }
+        .header h1 { font-size: 45px; margin: 0; letter-spacing: 8px; font-weight: 900; color: #000; }
         .header p { font-size: 15px; margin: 5px 0 25px; letter-spacing: 2px; border-bottom: 2.5px solid #000; display: inline-block; padding-bottom: 3px; }
         .section-title { font-size: 18px; text-align: left; margin: 15px 0 10px; font-weight: bold; padding-left: 5px; }
         .selection-box { border: 1px solid #b5b0a3; border-radius: 12px; padding: 20px 5px; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; background: #f3f0e7; }
@@ -17,9 +17,9 @@
         .item.active img { transform: scale(1.1); }
         .item.active::after { content: '✔'; position: absolute; top: -10px; right: 5px; background: #000; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; line-height: 22px; }
         .order-btn { margin-top: 20px; width: 100%; padding: 18px; background: #000; color: #fff; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; font-size: 16px; }
-        .insta-id { margin-top: 30px; font-size: 13px; color: #555; }
+        .insta-id { margin-top: 30px; font-size: 13px; color: #555; letter-spacing: 1px; }
 
-        /* 결과 모달 스타일 */
+        /* 결과 모달 */
         #resultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; justify-content: center; align-items: center; }
         .modal-content { background: #f3f0e7; padding: 30px; border-radius: 20px; text-align: center; width: 320px; border: 1.5px solid #b5b0a3; }
         #resultImage { width: 100%; border-radius: 10px; border: 1px solid #b5b0a3; margin-bottom: 15px; background: #fff; }
@@ -42,8 +42,8 @@
             <div class="item" onclick="toggleTopping('Oreo', this)"><img src="images/oreo.png"><p>OREO</p></div>
             <div class="item" onclick="toggleTopping('Lotus', this)"><img src="images/lotus.png"><p>LOTUS</p></div>
             <div class="item" onclick="toggleTopping('Marsh', this)"><img src="images/marshmallow.png"><p>MARSHMALLOW</p></div>
-            <div class="item" onclick="toggleTopping('Pretzel', this)"><img src="images/pretzel.png"><p>PRETZEL</p></div>
             <div class="item" onclick="toggleTopping('Nuts', this)"><img src="images/nuts.png"><p>NUTS</p></div>
+            <div class="item" onclick="toggleTopping('Pretzel', this)"><img src="images/pretzel.png"><p>PRETZEL</p></div>
         </div>
 
         <button class="order-btn" onclick="sendOrder()">ORDER NOW</button>
@@ -52,7 +52,7 @@
 
     <div id="resultModal">
         <div class="modal-content">
-            <h2 style="font-size:18px; margin-bottom:15px;">주문하신 초콜릿 완성!</h2>
+            <h2 style="font-size:18px; margin-bottom:15px;">나만의 초콜릿 완성!</h2>
             <img id="resultImage" src="">
             <p id="resultDesc" style="font-size:12px; color:#333; margin-bottom:20px;"></p>
             <button onclick="closeModal()" style="width:100%; padding:12px; background:#000; color:#fff; border:none; cursor:pointer;">닫기</button>
@@ -63,79 +63,48 @@
         let base = '';
         let toppings = [];
         
-        // 🛠️ 파일명 규칙을 위한 토핑 우선순위 정의
-        // 리스트에 있는 순서대로 파일명이 조합되도록 설정했어.
-        // 🛠️ 병규의 실제 파일명 리스트 순서에 맞춘 최종 우선순위
-const toppingOrder = ['Oreo', 'Lotus', 'Marsh', 'Nuts', 'Pretzel']; 
+        // 🛠️ 병규의 실제 파일명 규칙 순서 (Oreo가 가장 앞)
+        const toppingOrder = ['Oreo', 'Lotus', 'Marsh', 'Nuts', 'Pretzel']; 
 
-function sendOrder() {
-    if (!base) {
-        alert('베이스 초콜릿을 선택해주세요! 🖤');
-        return;
-    }
+        function selectBase(val, el) {
+            base = val;
+            document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
 
-    let fileName = "";
+        function toggleTopping(val, el) {
+            const idx = toppings.indexOf(val);
+            if (idx > -1) { toppings.splice(idx, 1); el.classList.remove('active'); }
+            else { toppings.push(val); el.classList.add('active'); }
+        }
 
-    if (toppings.length === 0) {
-        // 아무것도 안 고르면 dark.png (병규 요청 사항 반영)
-        fileName = "dark.png";
-    } else {
-        // 사용자가 클릭한 순서와 상관없이 Oreo -> Lotus -> Marsh 순으로 정렬
-        const sortedToppings = [...toppings].sort((a, b) => {
-            return toppingOrder.indexOf(a) - toppingOrder.indexOf(b);
-        });
-        
-        // 정렬된 이름으로 파일명 생성 (예: Dark_Oreo_Lotus.png)
-        fileName = "Dark_" + sortedToppings.join("_") + ".png";
-    }
-
-    const modal = document.getElementById('resultModal');
-    const img = document.getElementById('resultImage');
-    
-    // 최종 확인된 파일명으로 이미지 로드
-    img.src = `images/${fileName}`; 
-    modal.style.display = 'flex';
-    
-    console.log("매칭 시도하는 파일명:", fileName);
-}
-    
         function sendOrder() {
-            if (!base) {
-                alert('베이스 초콜릿을 선택해주세요! 🖤');
-                return;
-            }
-    
+            if (!base) { alert('베이스 초콜릿을 선택해주세요! 🖤'); return; }
+
             let fileName = "";
-    
             if (toppings.length === 0) {
-                // 1. 아무것도 고르지 않았을 때: dark.png 적용
+                // 아무것도 안 고르면 dark.png (병규 요청 사항)
                 fileName = "dark.png";
             } else {
-                // 2. 토핑이 있을 때: 정해진 순서대로 조합
-                // 사용자가 클릭한 순서와 상관없이 고정된 순서로 정렬해.
+                // Oreo -> Lotus -> Marsh -> Nuts -> Pretzel 순으로 정렬
                 const sortedToppings = [...toppings].sort((a, b) => {
                     return toppingOrder.indexOf(a) - toppingOrder.indexOf(b);
                 });
-                
-                // 결과 예시: Dark_Lotus_Marsh.png
+                // 예: Dark_Oreo_Lotus.png
                 fileName = "Dark_" + sortedToppings.join("_") + ".png";
             }
-    
+
             const modal = document.getElementById('resultModal');
             const img = document.getElementById('resultImage');
             const desc = document.getElementById('resultDesc');
-    
-            // 🖼️ images 폴더 안의 해당 파일명을 호출해!
+
             img.src = `images/${fileName}`; 
             desc.innerText = `${base.toUpperCase()} 베이스 주문 완료!`;
-            
             modal.style.display = 'flex';
-            console.log("불러오는 파일명:", fileName);
+            console.log("불러오기 시도:", fileName);
         }
-    
-        function closeModal() {
-            document.getElementById('resultModal').style.display = 'none';
-        }
+
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
     </script>
 </body>
 </html>
