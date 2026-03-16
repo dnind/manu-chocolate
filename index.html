@@ -62,45 +62,67 @@
     <script>
         let base = '';
         let toppings = [];
-        // 파일명 정렬을 위한 토핑 순서 정의
+        
+        // 🛠️ 파일명 규칙을 위한 토핑 우선순위 정의
+        // 리스트에 있는 순서대로 파일명이 조합되도록 설정했어.
         const toppingOrder = ['Lotus', 'Marsh', 'Nuts', 'Pretzel', 'Oreo']; 
-
+    
         function selectBase(val, el) {
             base = val;
             document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
             el.classList.add('active');
+            console.log("선택된 베이스:", base);
         }
-
+    
         function toggleTopping(val, el) {
             const idx = toppings.indexOf(val);
-            if (idx > -1) { toppings.splice(idx, 1); el.classList.remove('active'); }
-            else { toppings.push(val); el.classList.add('active'); }
-        }
-
-        function sendOrder() {
-            if (!base) { alert('베이스 초콜릿을 선택해주세요! 🖤'); return; }
-
-            // 🛠️ 파일명 생성 로직
-            // 선택된 토핑들을 toppingOrder 순서에 맞춰 정렬해 파일명을 만듭니다.
-            const sortedToppings = toppings.sort((a, b) => toppingOrder.indexOf(a) - toppingOrder.indexOf(b));
-            
-            let fileName = base;
-            if (sortedToppings.length === 0) {
-                fileName += "_Full.png"; // 토핑 없을 때
+            if (idx > -1) {
+                toppings.splice(idx, 1);
+                el.classList.remove('active');
             } else {
-                fileName += "_" + sortedToppings.join("_") + ".png";
+                toppings.push(val);
+                el.classList.add('active');
             }
-
+            console.log("선택된 토핑:", toppings);
+        }
+    
+        function sendOrder() {
+            if (!base) {
+                alert('베이스 초콜릿을 선택해주세요! 🖤');
+                return;
+            }
+    
+            let fileName = "";
+    
+            if (toppings.length === 0) {
+                // 1. 아무것도 고르지 않았을 때: dark.png 적용
+                fileName = "dark.png";
+            } else {
+                // 2. 토핑이 있을 때: 정해진 순서대로 조합
+                // 사용자가 클릭한 순서와 상관없이 고정된 순서로 정렬해.
+                const sortedToppings = [...toppings].sort((a, b) => {
+                    return toppingOrder.indexOf(a) - toppingOrder.indexOf(b);
+                });
+                
+                // 결과 예시: Dark_Lotus_Marsh.png
+                fileName = "Dark_" + sortedToppings.join("_") + ".png";
+            }
+    
             const modal = document.getElementById('resultModal');
             const img = document.getElementById('resultImage');
             const desc = document.getElementById('resultDesc');
-
-            img.src = `images/${fileName}`; // images 폴더에서 파일 불러오기
-            desc.innerText = `${base.toUpperCase()} + ${toppings.join(', ').toUpperCase() || '순정'}`;
+    
+            // 🖼️ images 폴더 안의 해당 파일명을 호출해!
+            img.src = `images/${fileName}`; 
+            desc.innerText = `${base.toUpperCase()} 베이스 주문 완료!`;
+            
             modal.style.display = 'flex';
+            console.log("불러오는 파일명:", fileName);
         }
-
-        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
+    
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
