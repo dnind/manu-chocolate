@@ -3,41 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MANU BARK CHOCOLATE</title>
+    <title>MANU BARK CHOCOLATE - Ordering</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>MANU</h1>
-            <p>BARK CHOCOLATE</title>
+    <div class="menu-container">
+        <header class="menu-header">
+            <h1 class="manu-title">MANU</h1>
+            <p class="bark-chocolate-text">BARK CHOCOLATE</p>
         </header>
 
-        <section class="result-section">
-            <div class="image-frame">
-                <img id="chocolate-result" src="images/default.jpg" alt="나만의 바크 초콜릿">
+        <section class="menu-section base-selection">
+            <h2 class="section-title">< BASE ></h2>
+            <div class="options-grid base-options">
+                <div class="option">
+                    <img src="icons/milk.png" alt="Milk" class="option-icon">
+                    <label>
+                        <input type="radio" name="base" value="milk" checked> MILK
+                    </label>
+                </div>
+                <div class="option">
+                    <img src="icons/strawberry.png" alt="Strawberry" class="option-icon">
+                    <label>
+                        <input type="radio" name="base" value="strawberry"> STRAWBERRY
+                    </label>
+                </div>
+                <div class="option">
+                    <img src="icons/white.png" alt="White" class="option-icon">
+                    <label>
+                        <input type="radio" name="base" value="white"> WHITE
+                    </label>
+                </div>
             </div>
         </section>
 
-        <section class="selection-section">
-            <h3>< BASE ></h3>
-            <div class="base-options">
-                <label><input type="radio" name="base" value="milk" checked> MILK</label>
-                <label><input type="radio" name="base" value="strawberry"> STRAWBERRY</label>
-                <label><input type="radio" name="base" value="white"> WHITE</label>
-            </div>
-
-            <hr>
-
-            <h3>< TOPPING ></h3>
-            <div class="topping-options">
-                <label><input type="checkbox" class="topping" value="oreo"> OREO</label>
-                <label><input type="checkbox" class="topping" value="lotus"> LOTUS</label>
-                <label><input type="checkbox" class="topping" value="marsh"> MARSHMALLOW</label>
-                <label><input type="checkbox" class="topping" value="pretzel"> PRETZEL</label>
-                <label><input type="checkbox" class="topping" value="nuts"> NUTS</label>
+        <section class="menu-section topping-selection">
+            <h2 class="section-title">< TOPPING ></h2>
+            <div class="options-grid topping-options">
+                <div class="option">
+                    <img src="icons/oreo.png" alt="Oreo" class="option-icon">
+                    <label>
+                        <input type="checkbox" class="topping" value="oreo"> OREO
+                    </label>
+                </div>
+                <div class="option">
+                    <img src="icons/lotus.png" alt="Lotus" class="option-icon">
+                    <label>
+                        <input type="checkbox" class="topping" value="lotus"> LOTUS
+                    </label>
+                </div>
+                <div class="option">
+                    <img src="icons/marsh.png" alt="Marshmallow" class="option-icon">
+                    <label>
+                        <input type="checkbox" class="topping" value="marsh"> MARSHMALLOW
+                    </label>
+                </div>
+                <div class="option">
+                    <img src="icons/pretzel.png" alt="Pretzel" class="option-icon">
+                    <label>
+                        <input type="checkbox" class="topping" value="pretzel"> PRETZEL
+                    </label>
+                </div>
+                <div class="option">
+                    <img src="icons/nuts.png" alt="Nuts" class="option-icon">
+                    <label>
+                        <input type="checkbox" class="topping" value="nuts"> NUTS (ALMOND, CASHEW)
+                    </label>
+                </div>
             </div>
         </section>
+
+        <div class="result-action-area">
+            <button id="generate-button" class="btn btn-primary">완성된 이미지 보기</button>
+            <div id="results-area" class="results-container" style="display: none;">
+                <p>나만의 초콜릿 조합:</p>
+                <img id="chocolate-result" src="" alt="나만의 바크 초콜릿">
+            </div>
+        </div>
+
+        <footer class="menu-footer">
+            <p>@ lo_ong_._</p>
+        </footer>
     </div>
     <script src="script.js"></script>
 </body>
