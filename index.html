@@ -7,7 +7,7 @@
     <style>
         body {
             margin: 0;
-            background-color: #e5e2d9; /* 외부 배경색 */
+            background-color: #e5e2d9; 
             font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
@@ -16,18 +16,18 @@
 
         .container {
             width: 380px;
-            background: #f3f0e7; /* 내부 배경색 */
+            background: #f3f0e7;
             border: 1.5px solid #b5b0a3;
             padding: 30px 20px;
             text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .header h1 { font-size: 45px; margin: 0; letter-spacing: 8px; font-weight: 900; color: #000; }
+        .header h1 { font-size: 45px; margin: 0; letter-spacing: 8px; font-weight: 900; }
         .header p { font-size: 15px; margin: 5px 0 25px; letter-spacing: 2px; border-bottom: 2.5px solid #000; display: inline-block; padding-bottom: 3px; }
 
         .section-title { font-size: 18px; text-align: left; margin: 15px 0 10px; font-weight: bold; padding-left: 5px; }
         
-        /* ✨ 박스 안쪽도 동일한 색으로 수정 (#f3f0e7) */
         .selection-box {
             border: 1px solid #b5b0a3;
             border-radius: 12px;
@@ -36,9 +36,10 @@
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
-            background: #f3f0e7; /* 기존 흰색에서 수정됨 */
+            background: #fff;
         }
 
+        /* 🖱️ 클릭이 잘 되도록 수정한 버튼 스타일 */
         .item {
             width: 30%;
             cursor: pointer;
@@ -47,19 +48,20 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            -webkit-tap-highlight-color: transparent; /* 모바일 클릭 잔상 제거 */
         }
 
         .item img { 
             width: 80px; 
             height: 80px; 
             object-fit: contain; 
-            pointer-events: none; 
+            pointer-events: none; /* ✨ 이미지가 클릭 이벤트를 방해하지 않게 함 */
             transition: transform 0.2s;
         }
 
         .item p { font-size: 11px; margin-top: 8px; font-weight: bold; color: #333; pointer-events: none; }
 
-        /* ✅ 선택 시 효과 */
+        /* ✅ 선택 시 효과 (디자인 예시 반영) */
         .item.active img { transform: scale(1.1); }
         .item.active::after {
             content: '✔';
@@ -87,7 +89,91 @@
     </style>
 </head>
 <body>
+
     <div class="container">
+        <div class="header">
+            <h1>MANU</h1>
+            <p>BARK CHOCOLATE</p>
         </div>
+
+        <div class="section-title">〈 BASE 〉</div>
+        <div class="selection-box" id="baseSection">
+            <div class="item" onclick="selectBase('dark', this)">
+                <img src="images/dark.png" onerror="this.src='https://via.placeholder.com/80?text=Dark'">
+                <p>DARK</p>
+            </div>
+            <div class="item" onclick="selectBase('strawberry', this)">
+                <img src="images/strawberry.png" onerror="this.src='https://via.placeholder.com/80?text=Strawberry'">
+                <p>STRAW BERRY</p>
+            </div>
+            <div class="item" onclick="selectBase('white', this)">
+                <img src="images/white.png" onerror="this.src='https://via.placeholder.com/80?text=White'">
+                <p>WHITE</p>
+            </div>
+        </div>
+
+        <div class="section-title">〈 TOPPING 〉</div>
+        <div class="selection-box" id="toppingSection">
+            <div class="item" onclick="toggleTopping('oreo', this)">
+                <img src="images/oreo.png" onerror="this.src='https://via.placeholder.com/80?text=Oreo'">
+                <p>OREO</p>
+            </div>
+            <div class="item" onclick="toggleTopping('lotus', this)">
+                <img src="images/lotus.png" onerror="this.src='https://via.placeholder.com/80?text=Lotus'">
+                <p>LOTUS</p>
+            </div>
+            <div class="item" onclick="toggleTopping('marshmallow', this)">
+                <img src="images/marshmallow.png" onerror="this.src='https://via.placeholder.com/80?text=M.Mallow'">
+                <p>MARSHMALLOW</p>
+            </div>
+            <div class="item" onclick="toggleTopping('pretzel', this)">
+                <img src="images/pretzel.png" onerror="this.src='https://via.placeholder.com/80?text=Pretzel'">
+                <p>PRETZEL</p>
+            </div>
+            <div class="item" onclick="toggleTopping('nuts', this)">
+                <img src="images/nuts.png" onerror="this.src='https://via.placeholder.com/80?text=Nuts'">
+                <p>NUTS</p>
+            </div>
+        </div>
+
+        <button class="order-btn" onclick="sendOrder()">ORDER NOW</button>
+        
+        <div class="insta-id">@ lo_ong._</div>
+    </div>
+
+    <script>
+        let base = '';
+        let toppings = [];
+
+        function selectBase(val, el) {
+            base = val;
+            // 모든 베이스 아이템에서 active 제거
+            document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
+            // 클릭한 것만 추가
+            el.classList.add('active');
+            console.log("선택된 베이스:", base);
+        }
+
+        function toggleTopping(val, el) {
+            const idx = toppings.indexOf(val);
+            if (idx > -1) {
+                toppings.splice(idx, 1);
+                el.classList.remove('active');
+            } else {
+                toppings.push(val);
+                el.classList.add('active');
+            }
+            console.log("선택된 토핑:", toppings);
+        }
+
+        function sendOrder() {
+            if (!base) {
+                alert('베이스 초콜릿을 먼저 선택해줘! 🖤');
+                return;
+            }
+            const msg = `🍫 주문이 접수되었습니다!\n\n베이스: ${base.toUpperCase()}\n토핑: ${toppings.join(', ').toUpperCase() || '없음'}`;
+            alert(msg);
+        }
+    </script>
 </body>
 </html>
