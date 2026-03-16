@@ -3,91 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MANU BARK CHOCOLATE - Ordering</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <title>MANU BARK CHOCOLATE</title>
+    <style>
+        @font-face {
+            font-family: 'Cafe24SsurroundAir';
+            src: url('https://gherkin.github.io/Cafe24SsurroundAir.woff') format('woff');
+        }
+
+        body {
+            margin: 0;
+            background-color: #e5e2d9; /* 예시 디자인 배경색 */
+            font-family: 'Cafe24SsurroundAir', sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 50px 0;
+        }
+
+        .container {
+            width: 400px;
+            background: #f3f0e7;
+            border: 2px solid #b5b0a3;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 10px 10px 0px #b5b0a3;
+        }
+
+        .header h1 { font-size: 40px; margin: 0; letter-spacing: 5px; color: #000; }
+        .header p { font-size: 14px; margin: 10px 0 30px; border-bottom: 1px solid #000; display: inline-block; padding-bottom: 5px; }
+
+        .section-title { font-size: 20px; text-align: left; margin: 20px 0 10px; padding-left: 10px; color: #000; }
+        
+        /* 📦 선택 박스 공통 디자인 */
+        .selection-box {
+            border: 1px solid #b5b0a3;
+            border-radius: 15px;
+            padding: 20px 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            background: #fff;
+        }
+
+        .item {
+            width: 30%;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .item img { width: 80%; transition: 0.3s; }
+        .item p { font-size: 12px; margin-top: 5px; font-weight: bold; }
+
+        /* ✨ 선택 시 효과 */
+        .item.active img { transform: scale(1.1); filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2)); }
+        .item.active::after {
+            content: '✓';
+            position: absolute;
+            top: 0; right: 10%;
+            background: #000; color: #fff;
+            width: 20px; height: 20px;
+            border-radius: 50%; font-size: 12px; line-height: 20px;
+        }
+
+        /* 🛒 주문 버튼 */
+        .order-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .order-btn:hover { background: #333; }
+
+        /* 결과 확인 모달 */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); justify-content: center; align-items: center;
+        }
+        .modal-content {
+            background: #f3f0e7; padding: 30px; border: 2px solid #000; width: 300px;
+        }
+        #resultView { width: 100%; margin: 15px 0; border: 1px solid #b5b0a3; }
+    </style>
 </head>
 <body>
-    <div class="menu-container">
-        <header class="menu-header">
-            <h1 class="manu-title">MANU</h1>
-            <p class="bark-chocolate-text">BARK CHOCOLATE</p>
-        </header>
 
-        <section class="menu-section base-selection">
-            <h2 class="section-title">< BASE ></h2>
-            <div class="options-grid base-options">
-                <div class="option">
-                    <img src="icons/milk.png" alt="Milk" class="option-icon">
-                    <label>
-                        <input type="radio" name="base" value="milk" checked> MILK
-                    </label>
-                </div>
-                <div class="option">
-                    <img src="icons/strawberry.png" alt="Strawberry" class="option-icon">
-                    <label>
-                        <input type="radio" name="base" value="strawberry"> STRAWBERRY
-                    </label>
-                </div>
-                <div class="option">
-                    <img src="icons/white.png" alt="White" class="option-icon">
-                    <label>
-                        <input type="radio" name="base" value="white"> WHITE
-                    </label>
-                </div>
+    <div class="container">
+        <div class="header">
+            <h1>MANU</h1>
+            <p>BARK CHOCOLATE</p>
+        </div>
+
+        <div class="section-title">〈 BASE 〉</div>
+        <div class="selection-box" id="baseSection">
+            <div class="item" onclick="selectBase('milk', this)">
+                <img src="images/milk.png" alt="Milk">
+                <p>MILK</p>
             </div>
-        </section>
-
-        <section class="menu-section topping-selection">
-            <h2 class="section-title">< TOPPING ></h2>
-            <div class="options-grid topping-options">
-                <div class="option">
-                    <img src="icons/oreo.png" alt="Oreo" class="option-icon">
-                    <label>
-                        <input type="checkbox" class="topping" value="oreo"> OREO
-                    </label>
-                </div>
-                <div class="option">
-                    <img src="icons/lotus.png" alt="Lotus" class="option-icon">
-                    <label>
-                        <input type="checkbox" class="topping" value="lotus"> LOTUS
-                    </label>
-                </div>
-                <div class="option">
-                    <img src="icons/marsh.png" alt="Marshmallow" class="option-icon">
-                    <label>
-                        <input type="checkbox" class="topping" value="marsh"> MARSHMALLOW
-                    </label>
-                </div>
-                <div class="option">
-                    <img src="icons/pretzel.png" alt="Pretzel" class="option-icon">
-                    <label>
-                        <input type="checkbox" class="topping" value="pretzel"> PRETZEL
-                    </label>
-                </div>
-                <div class="option">
-                    <img src="icons/nuts.png" alt="Nuts" class="option-icon">
-                    <label>
-                        <input type="checkbox" class="topping" value="nuts"> NUTS (ALMOND, CASHEW)
-                    </label>
-                </div>
+            <div class="item" onclick="selectBase('strawberry', this)">
+                <img src="images/strawberry.png" alt="Strawberry">
+                <p>STRAW BERRY</p>
             </div>
-        </section>
-
-        <div class="result-action-area">
-            <button id="generate-button" class="btn btn-primary">완성된 이미지 보기</button>
-            <div id="results-area" class="results-container" style="display: none;">
-                <p>나만의 초콜릿 조합:</p>
-                <img id="chocolate-result" src="" alt="나만의 바크 초콜릿">
+            <div class="item" onclick="selectBase('white', this)">
+                <img src="images/white.png" alt="White">
+                <p>WHITE</p>
             </div>
         </div>
 
-        <footer class="menu-footer">
-            <p>@ lo_ong_._</p>
-        </footer>
+        <div class="section-title">〈 TOPPING 〉</div>
+        <div class="selection-box" id="toppingSection">
+            <div class="item" onclick="toggleTopping('oreo', this)">
+                <img src="images/oreo.png" alt="Oreo">
+                <p>OREO</p>
+            </div>
+            <div class="item" onclick="toggleTopping('lotus', this)">
+                <img src="images/lotus.png" alt="Lotus">
+                <p>LOTUS</p>
+            </div>
+            <div class="item" onclick="toggleTopping('marshmallow', this)">
+                <img src="images/marshmallow.png" alt="Marshmallow">
+                <p>MARSHMALLOW</p>
+            </div>
+            <div class="item" onclick="toggleTopping('pretzel', this)">
+                <img src="images/pretzel.png" alt="Pretzel">
+                <p>PRETZEL</p>
+            </div>
+            <div class="item" onclick="toggleTopping('chokoring', this)">
+                <img src="images/chokoring.png" alt="Chokoring">
+                <p>CHOKORING</p>
+            </div>
+        </div>
+
+        <button class="order-btn" onclick="showOrder()">ORDER NOW</button>
     </div>
-    <script src="script.js"></script>
+
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <h3>주문 확인</h3>
+            <div id="orderDetail"></div>
+            <button onclick="location.reload()" style="margin-top:20px; padding:10px 20px; cursor:pointer;">다시 선택하기</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedBase = '';
+        let selectedToppings = [];
+
+        function selectBase(base, el) {
+            selectedBase = base;
+            document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function toggleTopping(topping, el) {
+            const index = selectedToppings.indexOf(topping);
+            if (index > -1) {
+                selectedToppings.splice(index, 1);
+                el.classList.remove('active');
+            } else {
+                selectedToppings.push(topping);
+                el.classList.add('active');
+            }
+        }
+
+        function showOrder() {
+            if (!selectedBase) {
+                alert('베이스 초콜릿을 선택해주세요!');
+                return;
+            }
+            const modal = document.getElementById('orderModal');
+            const detail = document.getElementById('orderDetail');
+            
+            modal.style.display = 'flex';
+            detail.innerHTML = `
+                <p><strong>베이스:</strong> ${selectedBase.toUpperCase()}</p>
+                <p><strong>토핑:</strong> ${selectedToppings.join(', ').toUpperCase() || '없음'}</p>
+                <p style="font-size:12px; color:#666;">* 실제 이미지는 제작된 조합 파일을 불러옵니다.</p>
+            `;
+        }
+    </script>
 </body>
 </html>
