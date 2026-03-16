@@ -65,26 +65,39 @@
         
         // 🛠️ 파일명 규칙을 위한 토핑 우선순위 정의
         // 리스트에 있는 순서대로 파일명이 조합되도록 설정했어.
-        const toppingOrder = ['Lotus', 'Marsh', 'Nuts', 'Pretzel', 'Oreo']; 
+        // 🛠️ 병규의 실제 파일명 리스트 순서에 맞춘 최종 우선순위
+const toppingOrder = ['Oreo', 'Lotus', 'Marsh', 'Nuts', 'Pretzel']; 
+
+function sendOrder() {
+    if (!base) {
+        alert('베이스 초콜릿을 선택해주세요! 🖤');
+        return;
+    }
+
+    let fileName = "";
+
+    if (toppings.length === 0) {
+        // 아무것도 안 고르면 dark.png (병규 요청 사항 반영)
+        fileName = "dark.png";
+    } else {
+        // 사용자가 클릭한 순서와 상관없이 Oreo -> Lotus -> Marsh 순으로 정렬
+        const sortedToppings = [...toppings].sort((a, b) => {
+            return toppingOrder.indexOf(a) - toppingOrder.indexOf(b);
+        });
+        
+        // 정렬된 이름으로 파일명 생성 (예: Dark_Oreo_Lotus.png)
+        fileName = "Dark_" + sortedToppings.join("_") + ".png";
+    }
+
+    const modal = document.getElementById('resultModal');
+    const img = document.getElementById('resultImage');
     
-        function selectBase(val, el) {
-            base = val;
-            document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
-            el.classList.add('active');
-            console.log("선택된 베이스:", base);
-        }
+    // 최종 확인된 파일명으로 이미지 로드
+    img.src = `images/${fileName}`; 
+    modal.style.display = 'flex';
     
-        function toggleTopping(val, el) {
-            const idx = toppings.indexOf(val);
-            if (idx > -1) {
-                toppings.splice(idx, 1);
-                el.classList.remove('active');
-            } else {
-                toppings.push(val);
-                el.classList.add('active');
-            }
-            console.log("선택된 토핑:", toppings);
-        }
+    console.log("매칭 시도하는 파일명:", fileName);
+}
     
         function sendOrder() {
             if (!base) {
