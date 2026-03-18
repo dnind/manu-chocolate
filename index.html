@@ -5,66 +5,211 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MANU BARK CHOCOLATE</title>
     <style>
-        body { margin: 0; background-color: #e5e2d9; font-family: 'Arial', sans-serif; display: flex; justify-content: center; padding: 40px 0; }
-        .container { width: 380px; background: #f3f0e7; border: 1.5px solid #b5b0a3; padding: 30px 20px; text-align: center; }
-        .header h1 { font-size: 45px; margin: 0; letter-spacing: 8px; font-weight: 900; color: #000; }
-        .header p { font-size: 15px; margin: 5px 0 25px; letter-spacing: 2px; border-bottom: 2.5px solid #000; display: inline-block; padding-bottom: 3px; }
-        .section-title { font-size: 18px; text-align: left; margin: 15px 0 10px; font-weight: bold; padding-left: 5px; }
-        .selection-box { border: 1px solid #b5b0a3; border-radius: 12px; padding: 20px 5px; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; background: #f3f0e7; }
-        .item { width: 30%; cursor: pointer; margin-bottom: 10px; position: relative; display: flex; flex-direction: column; align-items: center; }
-        .item img { width: 80px; height: 80px; object-fit: contain; pointer-events: none; transition: transform 0.2s; }
-        .item p { font-size: 11px; margin-top: 8px; font-weight: bold; color: #333; pointer-events: none; }
-        .item.active img { transform: scale(1.1); }
-        .item.active::after { content: '✔'; position: absolute; top: -10px; right: 5px; background: #000; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; line-height: 22px; }
-        .order-btn { margin-top: 20px; width: 100%; padding: 18px; background: #000; color: #fff; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; font-size: 16px; }
-        .insta-id { margin-top: 30px; font-size: 13px; color: #555; letter-spacing: 1px; }
+        /* 🎨 노티드 스타일 컬러 팔레트 & 공통 디자인 */
+        :root {
+            --knotted-yellow: #FFD400;
+            --bg-cream: #FDF6E3;
+            --border-color: #b5b0a3;
+            --radius-large: 40px;
+        }
 
-        /* 결과 모달 */
-        #resultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100; justify-content: center; align-items: center; }
-        .modal-content { background: #f3f0e7; padding: 30px; border-radius: 20px; text-align: center; width: 320px; border: 1.5px solid #b5b0a3; }
-        #resultImage { width: 100%; border-radius: 10px; border: 1px solid #b5b0a3; margin-bottom: 15px; background: #fff; }
+        body {
+            margin: 0;
+            background-color: var(--bg-cream);
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* 📱 반응형 네비게이션 바 */
+        header {
+            background: #fff;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #eee;
+        }
+
+        .logo { font-size: 28px; font-weight: 900; letter-spacing: 3px; cursor: pointer; }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 25px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        nav a:hover { color: var(--knotted-yellow); }
+
+        /* 🖼️ 메인 슬라이드 배너 */
+        .slider-container {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+        }
+        .slides {
+            display: flex;
+            width: 300%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .slide {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        /* 임시 슬라이드 배경색 (노티드 느낌) */
+        .slide:nth-child(1) { background-color: #FFF9C4; }
+        .slide:nth-child(2) { background-color: #FFECB3; }
+        .slide:nth-child(3) { background-color: #FFE082; }
+
+        /* 📦 페이지 섹션 관리 */
+        section { display: none; padding: 40px 5%; }
+        section.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 🍫 커스텀 주문 페이지 (기존 로직 통합) */
+        .order-wrapper { max-width: 500px; margin: 0 auto; background: #fff; border-radius: var(--radius-large); padding: 30px; border: 1.5px solid var(--border-color); }
+        .selection-box { border: 1px solid var(--border-color); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; background: var(--bg-cream); }
+        .item { width: 30%; cursor: pointer; margin-bottom: 10px; text-align: center; position: relative; }
+        .item img { width: 70px; height: 70px; object-fit: contain; pointer-events: none; transition: 0.2s; }
+        .item.active img { transform: scale(1.1); }
+        .item.active::after { content: '✔'; position: absolute; top: -5px; right: 10px; background: #000; color: #fff; width: 20px; height: 20px; border-radius: 50%; font-size: 10px; line-height: 20px; }
+
+        /* 🔘 노티드풍 버튼 */
+        .knotted-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--knotted-yellow);
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #D4B100;
+            transition: 0.1s;
+        }
+        .knotted-btn:active { transform: translateY(3px); box-shadow: none; }
+
+        /* 팝업 모달 */
+        #resultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: #fff; padding: 30px; border-radius: var(--radius-large); text-align: center; width: 300px; }
+
+        /* 🦶 푸터 */
+        footer { padding: 40px; text-align: center; font-size: 12px; color: #888; }
+
+        /* 📱 모바일 최적화 (반응형) */
+        @media (max-width: 600px) {
+            .logo { font-size: 20px; }
+            nav a { margin-left: 10px; font-size: 12px; }
+            .order-wrapper { width: 90%; padding: 20px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header"><h1>MANU</h1><p>BARK CHOCOLATE</p></div>
+    <header>
+        <div class="logo" onclick="showPage('home')">MANU</div>
+        <nav>
+            <a onclick="showPage('home')">HOME</a>
+            <a onclick="showPage('order')">ORDER</a>
+            <a onclick="showPage('story')">STORY</a>
+        </nav>
+    </header>
 
-        <div class="section-title">〈 BASE 〉</div>
-        <div class="selection-box" id="baseSection">
-            <div class="item" onclick="selectBase('Dark', this)"><img src="images/dark.png"><p>DARK</p></div>
-            <div class="item" onclick="selectBase('Strawberry', this)"><img src="images/strawberry.png"><p>STRAW BERRY</p></div>
-            <div class="item" onclick="selectBase('White', this)"><img src="images/white.png"><p>WHITE</p></div>
+    <section id="home" class="active">
+        <div class="slider-container">
+            <div class="slides" id="slideBox">
+                <div class="slide">MANU BARK 🍫</div>
+                <div class="slide">SWEET MOMENT 🍭</div>
+                <div class="slide">CUSTOM MADE ✨</div>
+            </div>
         </div>
-
-        <div class="section-title">〈 TOPPING 〉</div>
-        <div class="selection-box" id="toppingSection">
-            <div class="item" onclick="toggleTopping('Oreo', this)"><img src="images/oreo.png"><p>OREO</p></div>
-            <div class="item" onclick="toggleTopping('Lotus', this)"><img src="images/lotus.png"><p>LOTUS</p></div>
-            <div class="item" onclick="toggleTopping('Marsh', this)"><img src="images/marshmallow.png"><p>MARSHMALLOW</p></div>
-            <div class="item" onclick="toggleTopping('Nuts', this)"><img src="images/nuts.png"><p>NUTS</p></div>
-            <div class="item" onclick="toggleTopping('Pretzel', this)"><img src="images/pretzel.png"><p>PRETZEL</p></div>
+        <div style="text-align: center; margin-top: 50px;">
+            <h2>베스트 셀러</h2>
+            <p>노티드 감성의 달콤한 바크 초콜릿을 만나보세요.</p>
+            <button class="knotted-btn" style="width: 200px;" onclick="showPage('order')">지금 주문하기</button>
         </div>
+    </section>
 
-        <button class="order-btn" onclick="sendOrder()">ORDER NOW</button>
-        <div class="insta-id">@ lo_ong._</div>
-    </div>
+    <section id="order">
+        <div class="order-wrapper">
+            <h2 style="text-align: center;">CUSTOM BARK</h2>
+            <p style="text-align: center; font-size: 14px; margin-bottom: 30px;">원하는 조합을 선택해주세요!</p>
+            
+            <div style="font-weight: bold; margin-bottom: 10px;">1. BASE</div>
+            <div class="selection-box" id="baseSection">
+                <div class="item" onclick="selectBase('Dark', this)"><img src="images/dark.png"><p>DARK</p></div>
+                <div class="item" onclick="selectBase('Strawberry', this)"><img src="images/strawberry.png"><p>STRAW</p></div>
+                <div class="item" onclick="selectBase('White', this)"><img src="images/white.png"><p>WHITE</p></div>
+            </div>
+
+            <div style="font-weight: bold; margin-bottom: 10px;">2. TOPPING</div>
+            <div class="selection-box" id="toppingSection">
+                <div class="item" onclick="toggleTopping('Oreo', this)"><img src="images/oreo.png"><p>OREO</p></div>
+                <div class="item" onclick="toggleTopping('Lotus', this)"><img src="images/lotus.png"><p>LOTUS</p></div>
+                <div class="item" onclick="toggleTopping('Marsh', this)"><img src="images/marshmallow.png"><p>MARSH</p></div>
+                <div class="item" onclick="toggleTopping('Nuts', this)"><img src="images/nuts.png"><p>NUTS</p></div>
+                <div class="item" onclick="toggleTopping('Pretzel', this)"><img src="images/pretzel.png"><p>PRETZEL</p></div>
+            </div>
+
+            <button class="knotted-btn" onclick="sendOrder()">ORDER NOW</button>
+        </div>
+    </section>
+
+    <section id="story">
+        <div style="max-width: 600px; margin: 0 auto; text-align: center; line-height: 1.8;">
+            <h2 style="font-size: 30px;">Our Story</h2>
+            <p>MANU는 단순한 초콜릿을 넘어, 당신의 가장 달콤한 순간을 디자인합니다.</p>
+            <p>노티드의 키치함과 바크 초콜릿의 투박한 매력이 만나 탄생한 특별한 선물.</p>
+        </div>
+    </section>
 
     <div id="resultModal">
         <div class="modal-content">
-            <h2 style="font-size:18px; margin-bottom:15px;">나만의 초콜릿 완성!</h2>
-            <img id="resultImage" src="">
-            <p id="resultDesc" style="font-size:12px; color:#333; margin-bottom:20px;"></p>
-            <button onclick="closeModal()" style="width:100%; padding:12px; background:#000; color:#fff; border:none; cursor:pointer;">닫기</button>
+            <h3>초콜릿 완성!</h3>
+            <img id="resultImage" style="width: 100%; border-radius: 20px; border: 1px solid #eee;">
+            <p id="resultDesc" style="font-size: 13px; margin: 15px 0;"></p>
+            <button class="knotted-btn" onclick="closeModal()">닫기</button>
         </div>
     </div>
 
+    <footer>
+        <p>@ lo_ong._</p>
+        <p>© 2026 MANU BARK CHOCOLATE. All Rights Reserved.</p>
+    </footer>
+
     <script>
+        // 1. 페이지 전환 (탭 메뉴 이동)
+        function showPage(pageId) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // 2. 메인 슬라이더 로직
+        let currentSlide = 0;
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 3;
+            document.getElementById('slideBox').style.transform = `translateX(-${currentSlide * 33.33}%)`;
+        }, 3000);
+
+        // 3. 커스텀 주문 로직 (기존 병규 규칙 적용)
         let base = '';
         let toppings = [];
-        
-        // 🛠️ 병규의 실제 파일명 규칙 순서 (Oreo가 가장 앞)
-        const toppingOrder = ['Oreo', 'Lotus', 'Marsh', 'Nuts', 'Pretzel']; 
+        const toppingOrder = ['Oreo', 'Lotus', 'Marsh', 'Nuts', 'Pretzel'];
 
         function selectBase(val, el) {
             base = val;
@@ -79,29 +224,12 @@
         }
 
         function sendOrder() {
-            if (!base) { alert('베이스 초콜릿을 선택해주세요! 🖤'); return; }
-
-            let fileName = "";
-            if (toppings.length === 0) {
-                // 아무것도 안 고르면 dark.png (병규 요청 사항)
-                fileName = "dark.png";
-            } else {
-                // Oreo -> Lotus -> Marsh -> Nuts -> Pretzel 순으로 정렬
-                const sortedToppings = [...toppings].sort((a, b) => {
-                    return toppingOrder.indexOf(a) - toppingOrder.indexOf(b);
-                });
-                // 예: Dark_Oreo_Lotus.png
-                fileName = "Dark_" + sortedToppings.join("_") + ".png";
-            }
-
-            const modal = document.getElementById('resultModal');
-            const img = document.getElementById('resultImage');
-            const desc = document.getElementById('resultDesc');
-
-            img.src = `images/${fileName}`; 
-            desc.innerText = `${base.toUpperCase()} 베이스 주문 완료!`;
-            modal.style.display = 'flex';
-            console.log("불러오기 시도:", fileName);
+            if (!base) return alert('베이스를 선택해줘! 🖤');
+            let fileName = toppings.length === 0 ? "dark.png" : "Dark_" + [...toppings].sort((a,b) => toppingOrder.indexOf(a) - toppingOrder.indexOf(b)).join("_") + ".png";
+            
+            document.getElementById('resultImage').src = `images/${fileName}`;
+            document.getElementById('resultDesc').innerText = `${base.toUpperCase()} 베이스 조합`;
+            document.getElementById('resultModal').style.display = 'flex';
         }
 
         function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
