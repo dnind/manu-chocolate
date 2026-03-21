@@ -10,19 +10,18 @@
             --bg-cream: #FDF6E3;
             --border-color: #b5b0a3;
             --radius-large: 40px;
-            --radius-medium: 20px;
+            --radius-medium: 15px; /* 조금 더 세련되게 수정 */
         }
 
         body { margin: 0; background-color: var(--bg-cream); font-family: 'Arial', sans-serif; color: #333; overflow-x: hidden; }
 
-        /* 1. 상단 헤더 (로고 & 메뉴) */
+        /* 상단 헤더 */
         header { background: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #eee; }
-        .logo { font-size: 28px; font-weight: 900; letter-spacing: 3px; cursor: pointer; color: #000; }
-        nav a { text-decoration: none; color: #333; margin-left: 20px; font-weight: bold; font-size: 13px; cursor: pointer; transition: color 0.2s; }
-        nav a:hover { color: var(--knotted-yellow); }
+        .logo { font-size: 24px; font-weight: 900; letter-spacing: 3px; cursor: pointer; color: #000; }
+        nav a { text-decoration: none; color: #333; margin-left: 15px; font-weight: bold; font-size: 12px; cursor: pointer; }
 
-        /* 메인 슬라이더 (비율 유지 버전) */
-        .slider-container { width: 100%; height: auto; aspect-ratio: 10 / 4; overflow: hidden; position: relative; background: var(--bg-cream); }
+        /* 1️⃣ 메인 슬라이더: 모바일 대응 수정 */
+        .slider-container { width: 100%; height: auto; aspect-ratio: 16 / 7; overflow: hidden; position: relative; background: var(--bg-cream); }
         .slides { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out; }
         .slide { width: 100%; height: 100%; background-size: contain; background-position: center; background-repeat: no-repeat; }
         .slide:nth-child(1) { background-image: url('images/main_slide1.png'); }
@@ -30,57 +29,60 @@
         .slide:nth-child(3) { background-image: url('images/main_slide3.png'); }
 
         /* 섹션 공통 */
-        section { display: none; padding: 60px 5%; min-height: 50vh; }
+        section { display: none; padding: 40px 5%; min-height: 50vh; }
         section.active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* 2. Review 섹션 (Event 스타일) */
-        .section-header { text-align: center; margin-bottom: 40px; }
-        .section-header h2 { font-size: 32px; font-weight: 900; margin: 0; }
+        /* 2️⃣ Review 단락: 크기 축소 및 통일 */
+        .section-header { text-align: center; margin-bottom: 30px; }
+        .section-header h2 { font-size: 28px; font-weight: 900; }
         
-        .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1200px; margin: 0 auto; }
-        .review-card { cursor: pointer; transition: transform 0.3s; }
-        .review-card:hover { transform: translateY(-10px); }
-        .review-card img { width: 100%; border-radius: var(--radius-medium); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .review-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 15px; 
+            max-width: 800px; /* 전체 너비를 줄여서 사진을 작게 만듦 */
+            margin: 0 auto; 
+        }
+        .review-card { cursor: pointer; transition: 0.3s; }
+        .review-card img { 
+            width: 100%; 
+            aspect-ratio: 1 / 1; /* 사진 비율을 1:1로 통일 */
+            object-fit: cover;   /* 비율 깨짐 방지 */
+            border-radius: var(--radius-medium); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
 
-        /* 3. Instagram 섹션 */
-        .insta-container { padding: 60px 0; background: #fff; margin-top: 40px; }
-        .insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; padding: 0 10px; }
-        .insta-item { aspect-ratio: 1 / 1; overflow: hidden; }
-        .insta-item img { width: 100%; height: 100%; object-fit: cover; }
+        /* Instagram 섹션 */
+        .insta-container { padding: 40px 0; background: #fff; margin-top: 40px; }
+        .insta-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; padding: 0 5px; }
+        .insta-item img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
 
-        /* 주문 UI */
+        /* 주문/모달/버튼 스타일 (기존 유지) */
         .order-wrapper { max-width: 500px; margin: 0 auto; background: #fff; border-radius: var(--radius-large); padding: 30px; border: 1.5px solid var(--border-color); }
         .selection-box { border: 1px solid var(--border-color); border-radius: 20px; padding: 20px 5px; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; background: var(--bg-cream); }
         .item { width: 30%; cursor: pointer; margin-bottom: 15px; text-align: center; position: relative; }
-        .item img { width: 75px; height: 75px; object-fit: contain; pointer-events: none; transition: 0.2s; }
+        .item img { width: 70px; height: 70px; object-fit: contain; pointer-events: none; }
         .item.active img { transform: scale(1.1); }
-        .item.active::after { content: '✔'; position: absolute; top: -10px; right: 10px; background: #000; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; line-height: 22px; }
-
-        .knotted-btn { width: 100%; padding: 18px; background: var(--knotted-yellow); border: none; border-radius: 50px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 0 #D4B100; transition: 0.1s; }
-        .knotted-btn:active { transform: translateY(3px); box-shadow: none; }
-
-        /* 푸터 소셜 아이콘 수정 */
-        footer { padding: 60px 5%; background-color: #fff; border-top: 1px solid #eee; }
-        .footer-social h3 { font-size: 14px; margin-bottom: 15px; letter-spacing: 1px; }
-        .footer-social ul { list-style: none; padding: 0; }
-        .footer-social li { margin-bottom: 15px; }
-        .footer-social a { text-decoration: none; color: #555; font-size: 13px; display: flex; align-items: center; }
-        .footer-social img { 
-            width: 32px; /* 크기 키움 */
-            height: 32px; 
-            margin-right: 12px; 
-            border-radius: 50%; 
-            object-fit: cover; /* 비율 유지 */
-            border: 1px solid #eee;
-        }
-
+        .item.active::after { content: '✔'; position: absolute; top: -5px; right: 5px; background: #000; color: #fff; width: 20px; height: 20px; border-radius: 50%; font-size: 10px; line-height: 20px; text-align: center;}
+        .knotted-btn { width: 100%; padding: 16px; background: var(--knotted-yellow); border: none; border-radius: 50px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #D4B100; }
         #resultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 30px; border-radius: var(--radius-large); text-align: center; width: 320px; }
+        .modal-content { background: #fff; padding: 30px; border-radius: var(--radius-large); text-align: center; width: 300px; }
 
-        @media (max-width: 768px) {
-            .review-grid { grid-template-columns: 1fr; }
+        /* 3️⃣ 푸터: 카피라이트 글씨 축소 */
+        footer { padding: 40px 5%; background-color: #fff; border-top: 1px solid #eee; }
+        .footer-social img { width: 28px; height: 28px; margin-right: 10px; border-radius: 50%; object-fit: cover; }
+        .footer-social a { text-decoration: none; color: #555; font-size: 12px; display: flex; align-items: center; margin-bottom: 10px;}
+        .copyright { font-size: 10px; color: #bbb; margin-top: 20px; } /* 아주 작게 수정 */
+
+        /* 📱 모바일 최적화 */
+        @media (max-width: 600px) {
+            /* 모바일에서 슬라이드가 너무 작지 않게 비율 조정 */
+            .slider-container { aspect-ratio: 1 / 1; } 
+            .review-grid { grid-template-columns: repeat(3, 1fr); width: 95%; }
             .insta-grid { grid-template-columns: repeat(3, 1fr); }
+            .logo { font-size: 20px; }
+            nav a { margin-left: 8px; font-size: 11px; }
         }
     </style>
 </head>
@@ -99,30 +101,28 @@
     <section id="home" class="active">
         <div class="slider-container">
             <div class="slides" id="slideBox">
-                <div class="slide"></div>
-                <div class="slide"></div>
-                <div class="slide"></div>
+                <div class="slide"></div><div class="slide"></div><div class="slide"></div>
             </div>
         </div>
 
-        <div style="margin-top: 80px;">
+        <div style="margin-top: 60px;">
             <div class="section-header"><h2>Review</h2></div>
             <div class="review-grid">
-                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb1.png" onerror="this.src='https://via.placeholder.com/400x300?text=Review+1'"></div>
-                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb2.png" onerror="this.src='https://via.placeholder.com/400x300?text=Review+2'"></div>
-                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb3.png" onerror="this.src='https://via.placeholder.com/400x300?text=Review+3'"></div>
+                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb1.png" onerror="this.src='https://via.placeholder.com/300'"></div>
+                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb2.png" onerror="this.src='https://via.placeholder.com/300'"></div>
+                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb3.png" onerror="this.src='https://via.placeholder.com/300'"></div>
             </div>
         </div>
 
         <div class="insta-container">
             <div class="section-header"><h2>Instagram</h2></div>
             <div class="insta-grid">
-                <div class="insta-item"><img src="images/insta1.png" onerror="this.src='https://via.placeholder.com/300?text=Insta+1'"></div>
-                <div class="insta-item"><img src="images/insta2.png" onerror="this.src='https://via.placeholder.com/300?text=Insta+2'"></div>
-                <div class="insta-item"><img src="images/insta3.png" onerror="this.src='https://via.placeholder.com/300?text=Insta+3'"></div>
-                <div class="insta-item"><img src="images/insta4.png" onerror="this.src='https://via.placeholder.com/300?text=Insta+4'"></div>
-                <div class="insta-item"><img src="images/insta5.png" onerror="this.src='https://via.placeholder.com/300?text=Insta+5'"></div>
-                <div class="insta-item"><img src="images/insta6.png" onerror="this.src='https://via.placeholder.com/300?text=Insta+6'"></div>
+                <div class="insta-item"><img src="images/insta1.png" onerror="this.src='https://via.placeholder.com/200'"></div>
+                <div class="insta-item"><img src="images/insta2.png" onerror="this.src='https://via.placeholder.com/200'"></div>
+                <div class="insta-item"><img src="images/insta3.png" onerror="this.src='https://via.placeholder.com/200'"></div>
+                <div class="insta-item"><img src="images/insta4.png" onerror="this.src='https://via.placeholder.com/200'"></div>
+                <div class="insta-item"><img src="images/insta5.png" onerror="this.src='https://via.placeholder.com/200'"></div>
+                <div class="insta-item"><img src="images/insta6.png" onerror="this.src='https://via.placeholder.com/200'"></div>
             </div>
         </div>
     </section>
@@ -147,16 +147,13 @@
     </section>
 
     <section id="story">
-        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <h2>Our Story</h2>
-            <p>Longing은 당신의 가장 달콤한 열망을 담습니다.</p>
-        </div>
+        <div style="max-width: 600px; margin: 0 auto; text-align: center;"><h2>Our Story</h2><p>Longing은 당신의 가장 달콤한 열망을 담습니다.</p></div>
     </section>
 
     <section id="review">
         <div class="section-header"><h2>Customer Reviews</h2></div>
         <p style="text-align: center;">고객님들의 소중한 리뷰가 모이는 공간입니다.</p>
-        </section>
+    </section>
 
     <div id="resultModal">
         <div class="modal-content">
@@ -169,13 +166,11 @@
 
     <footer>
         <div class="footer-social">
-            <h3>SOCIAL</h3>
-            <ul>
-                <li><a href="https://www.instagram.com/lo_ong._/" target="_blank"><img src="images/instagram-icon.png"> Instagram</a></li>
-                <li><a href="스마트스토어_주소" target="_blank"><img src="images/naver-icon.png"> Naver SmartStore</a></li>
-            </ul>
+            <h3 style="font-size: 13px;">SOCIAL</h3>
+            <a href="https://www.instagram.com/lo_ong._/" target="_blank"><img src="images/instagram-icon.png"> Instagram</a>
+            <a href="#" target="_blank"><img src="images/naver-icon.png"> Naver SmartStore</a>
         </div>
-        <p>© 2026 Longing BARK CHOCOLATE. All Rights Reserved.</p>
+        <p class="copyright">© 2026 Longing BARK CHOCOLATE. All Rights Reserved.</p>
     </footer>
 
     <script>
