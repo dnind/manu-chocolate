@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MANU BARK CHOCOLATE</title>
     <style>
-        /* 🎨 노티드 스타일 컬러 팔레트 & 공통 디자인 */
+        /* 🎨 노티드 스타일 테마 */
         :root {
             --knotted-yellow: #FFD400;
             --bg-cream: #FDF6E3;
@@ -13,155 +13,49 @@
             --radius-large: 40px;
         }
 
-        body {
-            margin: 0;
-            background-color: var(--bg-cream);
-            font-family: 'Arial', sans-serif;
-            color: #333;
-            overflow-x: hidden;
-        }
+        body { margin: 0; background-color: var(--bg-cream); font-family: 'Arial', sans-serif; color: #333; overflow-x: hidden; }
 
-        header {
-            background: #fff;
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #eee;
-        }
-
+        header { background: #fff; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #eee; }
         .logo { font-size: 28px; font-weight: 900; letter-spacing: 3px; cursor: pointer; }
-
-        nav a {
-            text-decoration: none;
-            color: #333;
-            margin-left: 25px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
+        nav a { text-decoration: none; color: #333; margin-left: 25px; font-weight: bold; font-size: 14px; cursor: pointer; }
         nav a:hover { color: var(--knotted-yellow); }
 
-        .slider-container {
-            width: 100%;
-            height: 400px;
-            overflow: hidden;
-            position: relative;
-            background: #fff;
-        }
-        .slides {
-            display: flex;
-            width: 300%;
-            height: 100%;
-            transition: transform 0.5s ease-in-out;
-        }
-        .slide {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            font-weight: bold;
-        }
+        /* 🖼️ 슬라이드 배너 */
+        .slider-container { width: 100%; height: 400px; overflow: hidden; position: relative; background: #fff; }
+        .slides { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out; }
+        .slide { width: 100%; display: flex; justify-content: center; align-items: center; font-size: 40px; font-weight: bold; }
         .slide:nth-child(1) { background-color: #FFF9C4; }
         .slide:nth-child(2) { background-color: #FFECB3; }
         .slide:nth-child(3) { background-color: #FFE082; }
 
-        section { display: none; padding: 40px 5%; }
+        /* 📦 섹션 제어 */
+        section { display: none; padding: 40px 5%; min-height: 60vh; }
         section.active { display: block; animation: fadeIn 0.5s; }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* 🛒 주문 UI */
         .order-wrapper { max-width: 500px; margin: 0 auto; background: #fff; border-radius: var(--radius-large); padding: 30px; border: 1.5px solid var(--border-color); }
-        .selection-box { border: 1px solid var(--border-color); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; background: var(--bg-cream); }
-        .item { width: 30%; cursor: pointer; margin-bottom: 10px; text-align: center; position: relative; }
-        .item img { width: 70px; height: 70px; object-fit: contain; pointer-events: none; transition: 0.2s; }
+        .selection-box { border: 1px solid var(--border-color); border-radius: 20px; padding: 20px 5px; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; background: var(--bg-cream); }
+        .item { width: 30%; cursor: pointer; margin-bottom: 15px; text-align: center; position: relative; }
+        .item img { width: 75px; height: 75px; object-fit: contain; pointer-events: none; transition: 0.2s; }
         .item.active img { transform: scale(1.1); }
-        .item.active::after { content: '✔'; position: absolute; top: -5px; right: 10px; background: #000; color: #fff; width: 20px; height: 20px; border-radius: 50%; font-size: 10px; line-height: 20px; }
+        .item.active::after { content: '✔'; position: absolute; top: -10px; right: 10px; background: #000; color: #fff; width: 22px; height: 22px; border-radius: 50%; font-size: 12px; line-height: 22px; }
 
-        .knotted-btn {
-            width: 100%;
-            padding: 18px;
-            background: var(--knotted-yellow);
-            border: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #D4B100;
-            transition: 0.1s;
-        }
+        .knotted-btn { width: 100%; padding: 18px; background: var(--knotted-yellow); border: none; border-radius: 50px; font-weight: bold; font-size: 16px; cursor: pointer; box-shadow: 0 4px 0 #D4B100; }
         .knotted-btn:active { transform: translateY(3px); box-shadow: none; }
 
-        #resultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: center; }
-        .modal-content { background: #fff; padding: 30px; border-radius: var(--radius-large); text-align: center; width: 300px; }
+        /* 모달 */
+        #resultModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: #fff; padding: 30px; border-radius: var(--radius-large); text-align: center; width: 320px; border: 1.5px solid var(--border-color); }
 
-        /* 📱 반응형 최적화 */
-        @media (max-width: 600px) {
-            .logo { font-size: 20px; }
-            nav a { margin-left: 10px; font-size: 12px; }
-            .order-wrapper { width: 90%; padding: 20px; }
-        }
-
-        /* 🦶 ✨ 노티드 스타일 소셜 푸터 디자인 */
-        footer {
-            padding: 60px 5%; /* 더 넓은 여백 */
-            background-color: #fff; /* 흰색 배경 */
-            text-align: left; /* 왼쪽 정렬 */
-            border-top: 1px solid #eee; /* 구분선 */
-        }
-
-        .footer-social {
-            margin-bottom: 30px;
-        }
-
-        .footer-social h3 {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-        }
-
-        .footer-social ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-social li {
-            margin-bottom: 10px;
-        }
-
-        .footer-social a {
-            text-decoration: none;
-            color: #555;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-        }
-
-        .footer-social a:hover {
-            color: var(--knotted-yellow);
-        }
-
-        .footer-social img {
-            width: 20px; /* 작은 아이콘 */
-            height: 20px;
-            margin-right: 10px;
-            border-radius: 50%; /* 원형 아이콘 */
-        }
-
-        footer p {
-            font-size: 12px;
-            color: #888;
-            margin: 0;
-            line-height: 1.5;
-        }
+        /* 🦶 소셜 푸터 */
+        footer { padding: 60px 5%; background-color: #fff; border-top: 1px solid #eee; }
+        .footer-social h3 { font-size: 14px; margin-bottom: 15px; letter-spacing: 1px; }
+        .footer-social ul { list-style: none; padding: 0; }
+        .footer-social li { margin-bottom: 10px; }
+        .footer-social a { text-decoration: none; color: #555; font-size: 13px; display: flex; align-items: center; }
+        .footer-social img { width: 20px; height: 20px; margin-right: 10px; border-radius: 50%; }
+        footer p { font-size: 12px; color: #888; margin: 5px 0; }
     </style>
 </head>
 <body>
@@ -176,30 +70,63 @@
     </header>
 
     <section id="home" class="active">
-        </section>
+        <div class="slider-container">
+            <div class="slides" id="slideBox">
+                <div class="slide">MANU BARK 🍫</div>
+                <div class="slide">SWEET MOMENT 🍭</div>
+                <div class="slide">CUSTOM MADE ✨</div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px;">
+            <h2>Best Sellers</h2>
+            <p>나만의 조합으로 완성하는 특별한 바크 초콜릿</p>
+            <button class="knotted-btn" style="width: 200px;" onclick="showPage('order')">주문하러 가기</button>
+        </div>
+    </section>
 
     <section id="order">
-        </section>
+        <div class="order-wrapper">
+            <h2 style="text-align: center;">CUSTOM ORDER</h2>
+            <div style="font-weight: bold; margin: 20px 0 10px;">〈 BASE 〉</div>
+            <div class="selection-box" id="baseSection">
+                <div class="item" onclick="selectBase('Dark', this)"><img src="images/dark.png"><p>DARK</p></div>
+                <div class="item" onclick="selectBase('Strawberry', this)"><img src="images/strawberry.png"><p>STRAW</p></div>
+                <div class="item" onclick="selectBase('White', this)"><img src="images/white.png"><p>WHITE</p></div>
+            </div>
+            <div style="font-weight: bold; margin: 20px 0 10px;">〈 TOPPING 〉</div>
+            <div class="selection-box" id="toppingSection">
+                <div class="item" onclick="toggleTopping('Oreo', this)"><img src="images/oreo.png"><p>OREO</p></div>
+                <div class="item" onclick="toggleTopping('Lotus', this)"><img src="images/lotus.png"><p>LOTUS</p></div>
+                <div class="item" onclick="toggleTopping('Marsh', this)"><img src="images/marshmallow.png"><p>MARSH</p></div>
+                <div class="item" onclick="toggleTopping('Nuts', this)"><img src="images/nuts.png"><p>NUTS</p></div>
+                <div class="item" onclick="toggleTopping('Pretzel', this)"><img src="images/pretzel.png"><p>PRETZEL</p></div>
+            </div>
+            <button class="knotted-btn" onclick="sendOrder()">ORDER NOW</button>
+        </div>
+    </section>
 
     <section id="story">
-        </section>
+        <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <h2>Our Story</h2>
+            <p>MANU는 정성껏 고른 재료로 당신만의 달콤함을 만듭니다.</p>
+        </div>
+    </section>
+
+    <div id="resultModal">
+        <div class="modal-content">
+            <h3>주문하신 초콜릿 완성!</h3>
+            <img id="resultImage" style="width: 100%; border-radius: 20px; margin: 15px 0; border: 1px solid #eee;">
+            <p id="resultDesc" style="font-size: 13px; color: #666;"></p>
+            <button class="knotted-btn" onclick="closeModal()">닫기</button>
+        </div>
+    </div>
 
     <footer>
         <div class="footer-social">
             <h3>SOCIAL</h3>
             <ul>
-                <li>
-                    <a href="https://www.instagram.com/lo_ong._/" target="_blank">
-                        <img src="images/instagram-icon.png" alt="Instagram">
-                        Instagram
-                    </a>
-                </li>
-                <li>
-                    <a href="여기에_스마트스토어_주소_입력" target="_blank">
-                        <img src="images/naver-icon.png" alt="Naver SmartStore">
-                        Naver SmartStore
-                    </a>
-                </li>
+                <li><a href="https://instagram.com/여기에_아이디" target="_blank"><img src="images/instagram-icon.png"> Instagram</a></li>
+                <li><a href="https://smartstore.naver.com/여기에_주소" target="_blank"><img src="images/naver-icon.png"> Naver SmartStore</a></li>
             </ul>
         </div>
         <p>@ lo_ong._</p>
@@ -207,7 +134,47 @@
     </footer>
 
     <script>
-        // 자바스크립트는 동일합니다
+        // 1. 탭 메뉴 이동 로직
+        function showPage(pageId) {
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // 2. 메인 슬라이더 (자동)
+        let slideIdx = 0;
+        setInterval(() => {
+            slideIdx = (slideIdx + 1) % 3;
+            document.getElementById('slideBox').style.transform = `translateX(-${slideIdx * 33.33}%)`;
+        }, 3000);
+
+        // 3. 주문 로직 (병규의 파일명 규칙 적용)
+        let base = '';
+        let toppings = [];
+        const toppingOrder = ['Oreo', 'Lotus', 'Marsh', 'Nuts', 'Pretzel'];
+
+        function selectBase(val, el) {
+            base = val;
+            document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function toggleTopping(val, el) {
+            const idx = toppings.indexOf(val);
+            if (idx > -1) { toppings.splice(idx, 1); el.classList.remove('active'); }
+            else { toppings.push(val); el.classList.add('active'); }
+        }
+
+        function sendOrder() {
+            if (!base) return alert('베이스를 골라줘! 🖤');
+            let fileName = toppings.length === 0 ? "dark.png" : "Dark_" + [...toppings].sort((a,b) => toppingOrder.indexOf(a) - toppingOrder.indexOf(b)).join("_") + ".png";
+            
+            document.getElementById('resultImage').src = `images/${fileName}`;
+            document.getElementById('resultDesc').innerText = `${base.toUpperCase()} 조합 주문 완료!`;
+            document.getElementById('resultModal').style.display = 'flex';
+        }
+
+        function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
     </script>
 </body>
 </html>
