@@ -21,14 +21,21 @@
         nav a:hover { color: var(--knotted-yellow); }
 
         /* 🖼️ 슬라이드 배너 CSS 수정: 사진 배경 설정 */
-        .slider-container {width: 100%; height: auto; aspect-ratio: 10 / 4; overflow: hidden; position: relative; background: var(--bg-cream); }
+        .slider-container {
+            width: 100%;
+            height: auto; /* 고정 높이 제거 */
+            aspect-ratio: 10 / 4; /* 사진들의 평균 비율 (가로10 : 세로4) */
+            overflow: hidden;
+            position: relative;
+            background-color: var(--bg-cream); /* 💡 여백이 생겨도 배경색과 합쳐져서 안 보임 */
+        }
         .slider-container { width: 100%; height: 350px; overflow: hidden; position: relative; background: var(--bg-cream); }
         .slides { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out; }
         
         .slide {
             width: 100%;
             height: 100%;
-            background-size: 100% 100%; /* ✅ 사진을 박스 크기에 강제로 맞춤 (비율은 박스가 유지함) */
+            background-size: contain; /* ✅ 비율 유지, 절대 안 잘림, 절대 안 찌그러짐 */
             background-position: center;
             background-repeat: no-repeat;
         }
