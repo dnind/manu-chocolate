@@ -21,14 +21,14 @@
         nav a:hover { color: var(--knotted-yellow); }
 
         /* 🖼️ 슬라이드 배너 CSS 수정: 사진 배경 설정 */
-        .slider-container { width: 100%; height: 450px; overflow: hidden; position: relative; background: #fff; }
+        .slider-container {width: 100%; height: auto; aspect-ratio: 10 / 4; overflow: hidden; position: relative; background: var(--bg-cream); }
         .slider-container { width: 100%; height: 350px; overflow: hidden; position: relative; background: var(--bg-cream); }
         .slides { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out; }
         
         .slide {
             width: 100%;
             height: 100%;
-            background-size: cover; /* ✅ 사진이 박스를 가득 채움 */
+            background-size: 100% 100%; /* ✅ 사진을 박스 크기에 강제로 맞춤 (비율은 박스가 유지함) */
             background-position: center;
             background-repeat: no-repeat;
         }
