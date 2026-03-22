@@ -78,6 +78,33 @@
             opacity: 0.8;;
         }
 
+                    /* --- Order 프로모션 섹션 스타일 --- */
+            .order-promo-container {
+                display: flex;
+                justify-content: center; /* 가운데 정렬 */
+                padding: 0 20px;
+            }
+            
+            .order-promo-card {
+                width: 22%; /* PC에서는 인스타 사진 1개 크기랑 비슷하게 */
+                text-align: center;
+            }
+            
+            .order-promo-card img {
+                width: 100%;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                border-radius: var(--radius-medium);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            }
+            
+            /* 📱 모바일에서는 다른 사진들처럼 75% 크기로 확대 */
+            @media (max-width: 768px) {
+                .order-promo-card {
+                    width: 75%; /* ✅ 인스타/리뷰 사진 크기와 동일하게 설정 */
+                }
+            }
+
         /* PC용 리뷰 그리드 (기본) */
         .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 800px; margin: 0 auto; }
         .review-card { cursor: pointer; transition: 0.3s; }
