@@ -19,16 +19,44 @@
         .logo { font-size: 24px; font-weight: 900; letter-spacing: 3px; cursor: pointer; color: #000; }
         nav a { text-decoration: none; color: #333; margin-left: 15px; font-weight: bold; font-size: 12px; cursor: pointer; }
 
-        .slider-container { width: 100%; height: auto; aspect-ratio: 16 / 7; overflow: hidden; position: relative; background: var(--bg-cream); }
+        /* 🖼️ 슬라이더 설정 수정 */
+.slider-container { 
+    width: 100%; 
+    height: auto; 
+    /* ✅ PC용: 가로로 아주 긴 사진들에 맞춰 비율을 3:1로 조정 */
+    aspect-ratio: 3 / 1; 
+    overflow: hidden; 
+    position: relative; 
+    background: var(--bg-cream); 
+}
+
+.slide { 
+    width: 100%; 
+    height: 100%; 
+    /* ✅ 절대 비율을 깨뜨리지 않으면서 박스에 맞춤 */
+    background-size: contain; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    /* 💡 사진 배경과 사이트 배경을 자연스럽게 연결 */
+    background-color: var(--bg-cream); 
+}
+
         .slides { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out; }
-        .slide { width: 100%; height: 100%; background-size: contain; background-position: center; background-repeat: no-repeat; }
         .slide:nth-child(1) { background-image: url('images/main_slide1.png'); }
         .slide:nth-child(2) { background-image: url('images/main_slide2.png'); }
         .slide:nth-child(3) { background-image: url('images/main_slide3.png'); }
-        @media (max-width: 768px) {
-        .slide:nth-child(1) { background-image: url('images/main_slide_mobile1.png'); }
-        .slide:nth-child(2) { background-image: url('images/main_slide_mobile2.png'); }
-        .slide:nth-child(3) { background-image: url('images/main_slide_mobile3.png'); }
+        
+/* 📱 모바일 최적화 (768px 이하) */
+@media (max-width: 768px) {
+    .slider-container { 
+        /* ✅ 모바일용: 정사각형 사진에 맞춰 1:1 비율로 변경 */
+        aspect-ratio: 1 / 1; 
+    } 
+    
+    .slide:nth-child(1) { background-image: url('images/main_slide_mobile1.png'); }
+    .slide:nth-child(2) { background-image: url('images/main_slide_mobile2.png'); }
+    .slide:nth-child(3) { background-image: url('images/main_slide_mobile3.png'); }
+}
 
         section { display: none; padding: 40px 5%; min-height: 50vh; }
         section.active { display: block; animation: fadeIn 0.5s; }
