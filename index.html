@@ -75,7 +75,7 @@
             width: auto;
             object-fit: contain;
             z-index: -1;           /* ✅ 가장 뒤로 보내기 (글자 뒤에 깔림) */
-            opacity: 0.8;;
+            opacity: 0.8;
         }
 
                     /* --- Order 프로모션 섹션 스타일 --- */
@@ -122,7 +122,7 @@
         }
         .insta-slider::-webkit-scrollbar { display: none; }
         .insta-item {
-            flex: 0 0 75%;
+            flex: 0 0 22%;
             scroll-snap-align: start;
             aspect-ratio: 1 / 1;
             overflow: hidden;
@@ -169,6 +169,9 @@
                 flex: 0 0 75%; /* 인스타 사진과 동일하게 크게 */
                 scroll-snap-align: start; 
             }
+
+            .insta-item {
+                flex: 0 0 75%;
             
             .logo { font-size: 20px; }
             nav a { margin-left: 8px; font-size: 11px; }
