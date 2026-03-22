@@ -61,18 +61,21 @@
                 display: inline-block; /* z-index 적용을 위해 */
                 position: relative;    /* ✅ z-index 적용을 위해 relative 설정 */
                 z-index: 2;            /* ✅ 캐릭터보다 위로 (제목 우선) */
-                padding-right: 50px;   /* ✅ 캐릭터가 들어갈 자리 확보 (캐릭터 크기에 맞춰 조절) */
             }
         
         /* 🧸 롱잉베어 캐릭터 스타일 */
         .title-character {
-            position: absolute;    /* ✅ 절대 배치 설정 */
-            right: 0;              /* ✅ 제목의 오른쪽 끝에 배치 */
-            top: 50%;              /* ✅ 세로 중앙 정렬 */
-            transform: translateY(-50%); /* ✅ 세로 중앙 정렬 보정 */
-            z-index: -1;            /* ✅ 제목보다 아래로 (겹칠 때) */
-            height: 40px;          /* 적당한 크기 */
+            position: absolute;    /* ✅ 화면 흐름에서 제외 (글자 위치에 영향 안 줌) */
+            top: 50%;              /* 세로 중앙 */
+            left: 50%;             /* 가로 중앙 */
+            /* 글자 위치에 맞춰서 적절히 옆으로 옮기기 (예: 오른쪽으로 60px) */
+            transform: translate(-50%, -50%) translateX(70px); 
+            
+            height: 200px;          /* 아까 키운 크기 유지 */
             width: auto;
+            object-fit: contain;
+            z-index: -1;           /* ✅ 가장 뒤로 보내기 (글자 뒤에 깔림) */
+            opacity: 0.8;;
         }
 
         /* PC용 리뷰 그리드 (기본) */
