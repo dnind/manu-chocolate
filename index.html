@@ -110,15 +110,6 @@
         .review-card { cursor: pointer; transition: 0.3s; }
         .review-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-medium); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* --- Order 섹션 전용 캐릭터 스타일 (왼쪽 배치) --- */
-        .order-title-char {
-        height: 200px;          /* ✅ 롱잉베어(85px)보다 조금 작게 설정해서 글씨와 밸런스를 맞춤 */
-        width: auto;
-        object-fit: contain;
-        order: -1;             /* ✅ 핵심: flex 순서를 가장 앞으로(-1) 당겨서 글씨 왼쪽에 배치! */
-        margin-right: 15px;
-        }
-
         /* Instagram 슬라이더 스타일 */
         .insta-container { padding: 40px 0; background: var(--bg-cream); margin-top: 40px; }
         .insta-slider {
@@ -219,7 +210,7 @@
         <div style="margin-top: 60px;">
     <div class="section-header">
         <h2>Order</h2>
-        <img src="images/order-char.png" alt="주문캐릭터" class="order-title-char" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10421/10421683.png'">
+        <img src="images/order-char.png" alt="주문캐릭터" class="title-character" onerror="this.src='https://cdn-icons-png.flaticon.com/512/10421/10421683.png'">
     </div>
     
     <div class="order-promo-container">
