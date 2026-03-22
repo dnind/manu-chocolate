@@ -120,6 +120,23 @@ html, body {
 
         /* Instagram 슬라이더 스타일 */
         .insta-container { padding: 40px 0; background: var(--bg-cream); margin-top: 40px; }
+        .insta-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 10px;
+            padding: 0 20px 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .insta-slider::-webkit-scrollbar { display: none; }
+        .insta-item {
+            flex: 0 0 22%;
+            scroll-snap-align: start;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 10px;
+        }
         /* PC에서 가로 스크롤바가 보이게 설정 (스타일 태그 안에 추가) */
             .insta-slider {
                 -ms-overflow-style: auto; /* IE */
