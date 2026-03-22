@@ -47,17 +47,31 @@
         .slide:nth-child(3) { background-image: url('images/main_slide3.png'); }
         
 /* 📱 모바일 최적화 (768px 이하) */
+
 @media (max-width: 768px) {
     .slider-container { 
-        /* ✅ 모바일용: 정사각형 사진에 맞춰 1:1 비율로 변경 */
-        aspect-ratio: 1 / 1; 
+        /* ✅ 비율을 4:5 정도로 조절해서 세로로 더 길게 만듦 */
+        aspect-ratio: 4 / 5; 
+        /* 또는 아예 화면 높이의 70% 정도를 차지하게 하고 싶다면 아래 주석 해제 */
+        /* height: 70vh; */
     } 
     
+    .slide {
+        /* ✅ 모바일 전용 이미지가 박스를 꽉 채우도록 설정 */
+        background-size: cover; 
+        background-position: center;
+    }
+
+    /* ✨ 모바일 전용 이미지 적용 */
     .slide:nth-child(1) { background-image: url('images/main_slide_mobile1.png'); }
     .slide:nth-child(2) { background-image: url('images/main_slide_mobile2.png'); }
     .slide:nth-child(3) { background-image: url('images/main_slide_mobile3.png'); }
-}
 
+    .review-grid { grid-template-columns: repeat(3, 1fr); width: 95%; }
+    .logo { font-size: 20px; }
+    nav a { margin-left: 8px; font-size: 11px; }
+}
+        
         section { display: none; padding: 40px 5%; min-height: 50vh; }
         section.active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
