@@ -19,100 +19,69 @@
         .logo { font-size: 24px; font-weight: 900; letter-spacing: 3px; cursor: pointer; color: #000; }
         nav a { text-decoration: none; color: #333; margin-left: 15px; font-weight: bold; font-size: 12px; cursor: pointer; }
 
-        /* 🖼️ 슬라이더 설정 수정 */
-.slider-container { 
-    width: 100%; 
-    height: auto; 
-    /* ✅ PC용: 가로로 아주 긴 사진들에 맞춰 비율을 3:1로 조정 */
-    aspect-ratio: 3 / 1; 
-    overflow: hidden; 
-    position: relative; 
-    background: var(--bg-cream); 
-}
+        /* 🖼️ 슬라이더 설정 */
+        .slider-container { 
+            width: 100%; 
+            height: auto; 
+            aspect-ratio: 3 / 1; 
+            overflow: hidden; 
+            position: relative; 
+            background: var(--bg-cream); 
+        }
 
-.slide {
-    width: 100%;
-    height: 100%;
-    background-size: contain; /* ✅ 핵심: 사진 전체가 다 나오도록 비율을 맞춤, 절대 안 잘림 */
-    background-position: center;
-    background-repeat: no-repeat;
-    /* 💡 사진 배경과 사이트 배경을 자연스럽게 연결하기 위해 배경색 설정 */
-    background-color: var(--bg-cream); 
-}
+        .slide {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--bg-cream); 
+        }
         .slides { display: flex; width: 300%; height: 100%; transition: transform 0.5s ease-in-out; }
         .slide:nth-child(1) { background-image: url('images/main_slide1.png'); }
         .slide:nth-child(2) { background-image: url('images/main_slide2.png'); }
         .slide:nth-child(3) { background-image: url('images/main_slide3.png'); }
         
-/* 📱 모바일 최적화 (768px 이하) */
-
-@media (max-width: 768px) {
-    .slider-container { 
-        /* ✅ 비율을 4:5 정도로 조절해서 세로로 더 길게 만듦 */
-        aspect-ratio: 4 / 5; 
-        /* 또는 아예 화면 높이의 70% 정도를 차지하게 하고 싶다면 아래 주석 해제 */
-        /* height: 70vh; */
-    } 
-    
-    .slide {
-        /* ✅ 모바일 전용 이미지가 박스를 꽉 채우도록 설정 */
-        background-size: cover; 
-        background-position: center;
-    }
-
-    /* ✨ 모바일 전용 이미지 적용 */
-    .slide:nth-child(1) { background-image: url('images/main_slide_mobile1.png'); }
-    .slide:nth-child(2) { background-image: url('images/main_slide_mobile2.png'); }
-    .slide:nth-child(3) { background-image: url('images/main_slide_mobile3.png'); }
-
-    .review-grid { 
-    display: flex;             /* ✅ 가로 한 줄로 */
-    overflow-x: auto;         /* ✅ 가로 스크롤 허용 */
-    scroll-snap-type: x mandatory; 
-    gap: 12px;
-    padding: 0 20px 15px;      /* 여백 추가 */
-    width: auto;               /* 너비 제한 해제 */
-    /* grid-template-columns는 지워줘 */
-}
-
-/* 스크롤바 숨기기 (깔끔해 보임) */
-.review-grid::-webkit-scrollbar { display: none; }
-    .logo { font-size: 20px; }
-    nav a { margin-left: 8px; font-size: 11px; }
-}
-        
+        /* 섹션 공통 스타일 */
         section { display: none; padding: 40px 5%; min-height: 50vh; }
         section.active { display: block; animation: fadeIn 0.5s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .section-header { text-align: center; margin-bottom: 30px; }
-        .section-header h2 { font-size: 28px; font-weight: 900; }
+        /* ✨ 제목 & 캐릭터 정렬 스타일 */
+        .section-header { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            margin-bottom: 30px; 
+        }
+        .section-header h2 { font-size: 28px; font-weight: 900; margin: 0; }
         
+        /* 🧸 롱잉베어 캐릭터 스타일 */
+        .title-character {
+            height: 50px; /* 제목 높이에 맞춰 조절 */
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* PC용 리뷰 그리드 (기본) */
         .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 800px; margin: 0 auto; }
         .review-card { cursor: pointer; transition: 0.3s; }
-        .review-card { 
-                flex: 0 0 75%;            /* ✅ 인스타 사진과 동일한 크기! */
-                scroll-snap-align: start; 
-                }
         .review-card img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: var(--radius-medium); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* ✨ Instagram 슬라이더 스타일 (수정됨) */
+        /* Instagram 슬라이더 스타일 */
         .insta-container { padding: 40px 0; background: var(--bg-cream); margin-top: 40px; }
-        
         .insta-slider {
-            display: flex;             /* ✅ 가로 한 줄 */
-            overflow-x: auto;         /* ✅ 가로 스크롤 */
-            scroll-snap-type: x mandatory; /* ✅ 슬라이드 스냅 */
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
             gap: 10px;
-            padding: 0 20px 15px;      /* 여백 */
+            padding: 0 20px 15px;
             -webkit-overflow-scrolling: touch;
         }
-        
-        /* 스크롤바 숨기기 */
         .insta-slider::-webkit-scrollbar { display: none; }
-
-       .insta-item {
-            flex: 0 0 75%;            /* ❌ 기존 45%에서 22%로 축소 */
+        .insta-item {
+            flex: 0 0 75%;
             scroll-snap-align: start;
             aspect-ratio: 1 / 1;
             overflow: hidden;
@@ -120,7 +89,7 @@
         }
         .insta-item img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 주문/모달 스타일 (동일) */
+        /* 주문/모달 스타일 */
         .order-wrapper { max-width: 500px; margin: 0 auto; background: #fff; border-radius: var(--radius-large); padding: 30px; border: 1.5px solid var(--border-color); }
         .selection-box { border: 1px solid var(--border-color); border-radius: 20px; padding: 20px 5px; margin-bottom: 20px; display: flex; justify-content: space-around; flex-wrap: wrap; background: var(--bg-cream); }
         .item { width: 30%; cursor: pointer; margin-bottom: 15px; text-align: center; position: relative; }
@@ -136,29 +105,46 @@
         .footer-social a { text-decoration: none; color: #555; font-size: 12px; display: flex; align-items: center; margin-bottom: 10px;}
         .copyright { font-size: 10px; color: #bbb; margin-top: 20px; }
 
-        /* 📱 모바일 최적화 */
-        @media (max-width: 600px) {
-            .slider-container { 
-                aspect-ratio: auto; /* ❌ 기존 비율 해제 */
-                height: 80vh;        /* ✅ 핵심: 박스가 휴대폰 화면 높이의 80%를 차지하게 함 */
+        /* 📱 모바일 최적화 (768px 이하) */
+        @media (max-width: 768px) {
+            .slider-container { aspect-ratio: auto; height: 80vh; } 
+            .slide { background-size: cover; background-position: center; }
+            .slide:nth-child(1) { background-image: url('images/main_slide_mobile1.png'); }
+            .slide:nth-child(2) { background-image: url('images/main_slide_mobile2.png'); }
+            .slide:nth-child(3) { background-image: url('images/main_slide_mobile3.png'); }
+
+            /* ✨ 리뷰 단락 사진 크기 키우기 (인스타와 동일 로직) */
+            .review-grid { 
+                display: flex; 
+                overflow-x: auto; 
+                scroll-snap-type: x mandatory; 
+                gap: 12px;
+                padding: 0 20px 15px; 
+                width: auto; 
+                grid-template-columns: none; /* 그리드 해제 */
             }
-            .review-grid { grid-template-columns: repeat(3, 1fr); width: 95%; }
-            /* 인스타 슬라이더는 media query 밖에 정의된 flex 로직을 따름 */
+            .review-grid::-webkit-scrollbar { display: none; }
+            .review-card { 
+                flex: 0 0 75%; /* 인스타 사진과 동일하게 크게 */
+                scroll-snap-align: start; 
+            }
+            
             .logo { font-size: 20px; }
             nav a { margin-left: 8px; font-size: 11px; }
+            .title-character { height: 40px; } /* 모바일용 캐릭터 크기 축소 */
         }
     </style>
 </head>
 <body>
 
     <header>
-       <a href="#home" class="logo" style="text-decoration: none;">Longing</a>
-    <nav>
-        <a href="#home">HOME</a>
-        <a href="#order">ORDER</a>
-        <a href="#story">STORY</a>
-        <a href="#review">REVIEW</a>
-    </nav>
+        <a href="#home" class="logo" style="text-decoration: none;">Longing</a>
+        <nav>
+            <a href="#home">HOME</a>
+            <a href="#order">ORDER</a>
+            <a href="#story">STORY</a>
+            <a href="#review">REVIEW</a>
+        </nav>
     </header>
 
     <section id="home" class="active">
@@ -169,11 +155,14 @@
         </div>
 
         <div style="margin-top: 60px;">
-            <div class="section-header"><h2>Review</h2></div>
+            <div class="section-header">
+                <h2>Review</h2>
+                <img src="images/longing_bear.png" alt="롱잉베어" class="title-character" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3069/3069172.png'">
+            </div>
             <div class="review-grid">
-                <div class="review-card"><a href="#review"><img src="images/review_thumb1.png" onerror="..."></a></div>
-                <div class="review-card"><a href="#review"><img src="images/review_thumb2.png" onerror="..."></a> </div>
-                <div class="review-card"> <a href="#review"><img src="images/review_thumb3.png" onerror="..."></a> </div>            
+                <div class="review-card"><a href="#review"><img src="images/review_thumb1.png" onerror="this.src='https://via.placeholder.com/300'"></a></div>
+                <div class="review-card"><a href="#review"><img src="images/review_thumb2.png" onerror="this.src='https://via.placeholder.com/300'"></a> </div>
+                <div class="review-card"><a href="#review"><img src="images/review_thumb3.png" onerror="this.src='https://via.placeholder.com/300'"></a> </div>            
             </div>
         </div>
 
@@ -241,23 +230,14 @@
 
     <script>
         function route() {
-    const hash = window.location.hash.replace('#', '') || 'home';
-
-    // 모든 섹션 숨기기
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-
-    // 해당 섹션 보여주기
-    const target = document.getElementById(hash);
-    if (target) {
-        target.classList.add('active');
-    }
-    window.scrollTo(0, 0);
-}
-
-// ✨ 핵심: 뒤로가기나 주소가 바뀔 때마다 실행
-window.addEventListener('hashchange', route);
-// ✨ 처음 페이지 열릴 때 실행
-window.addEventListener('load', route);
+            const hash = window.location.hash.replace('#', '') || 'home';
+            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(hash);
+            if (target) { target.classList.add('active'); }
+            window.scrollTo(0, 0);
+        }
+        window.addEventListener('hashchange', route);
+        window.addEventListener('load', route);
 
         let slideIdx = 0;
         setInterval(() => {
@@ -269,19 +249,16 @@ window.addEventListener('load', route);
         let base = '';
         let toppings = [];
         const toppingOrder = ['Oreo', 'Lotus', 'Marsh', 'Nuts', 'Pretzel'];
-
         function selectBase(val, el) {
             base = val;
             document.querySelectorAll('#baseSection .item').forEach(i => i.classList.remove('active'));
             el.classList.add('active');
         }
-
         function toggleTopping(val, el) {
             const idx = toppings.indexOf(val);
             if (idx > -1) { toppings.splice(idx, 1); el.classList.remove('active'); }
             else { toppings.push(val); el.classList.add('active'); }
         }
-
         function sendOrder() {
             if (!base) return alert('베이스를 선택해줘! 🖤');
             let fileName = toppings.length === 0 ? "dark.png" : "Dark_" + [...toppings].sort((a,b) => toppingOrder.indexOf(a) - toppingOrder.indexOf(b)).join("_") + ".png";
@@ -289,7 +266,6 @@ window.addEventListener('load', route);
             document.getElementById('resultDesc').innerText = `${base.toUpperCase()} 베이스 주문 완료!`;
             document.getElementById('resultModal').style.display = 'flex';
         }
-
         function closeModal() { document.getElementById('resultModal').style.display = 'none'; }
     </script>
 </body>
