@@ -137,13 +137,13 @@
 <body>
 
     <header>
-        <div class="logo" onclick="showPage('home')">Longing</div>
-        <nav>
-            <a onclick="showPage('home')">HOME</a>
-            <a onclick="showPage('order')">ORDER</a>
-            <a onclick="showPage('story')">STORY</a>
-            <a onclick="showPage('review')">REVIEW</a>
-        </nav>
+       <a href="#home" class="logo" style="text-decoration: none;">Longing</a>
+    <nav>
+        <a href="#home">HOME</a>
+        <a href="#order">ORDER</a>
+        <a href="#story">STORY</a>
+        <a href="#review">REVIEW</a>
+    </nav>
     </header>
 
     <section id="home" class="active">
@@ -156,9 +156,9 @@
         <div style="margin-top: 60px;">
             <div class="section-header"><h2>Review</h2></div>
             <div class="review-grid">
-                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb1.png" onerror="this.src='https://via.placeholder.com/300'"></div>
-                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb2.png" onerror="this.src='https://via.placeholder.com/300'"></div>
-                <div class="review-card" onclick="showPage('review')"><img src="images/review_thumb3.png" onerror="this.src='https://via.placeholder.com/300'"></div>
+                <div class="review-card"><a href="#review"><img src="images/review_thumb1.png" onerror="..."></a></div>
+                <div class="review-card"><a href="#review"><img src="images/review_thumb2.png" onerror="..."></a> </div>
+                <div class="review-card"> <a href="#review"><img src="images/review_thumb3.png" onerror="..."></a> </div>            
             </div>
         </div>
 
@@ -225,11 +225,24 @@
     </footer>
 
     <script>
-        function showPage(pageId) {
-            document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0);
-        }
+        function route() {
+    const hash = window.location.hash.replace('#', '') || 'home';
+
+    // 모든 섹션 숨기기
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+
+    // 해당 섹션 보여주기
+    const target = document.getElementById(hash);
+    if (target) {
+        target.classList.add('active');
+    }
+    window.scrollTo(0, 0);
+}
+
+// ✨ 핵심: 뒤로가기나 주소가 바뀔 때마다 실행
+window.addEventListener('hashchange', route);
+// ✨ 처음 페이지 열릴 때 실행
+window.addEventListener('load', route);
 
         let slideIdx = 0;
         setInterval(() => {
