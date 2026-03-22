@@ -25,6 +25,10 @@
         .slide:nth-child(1) { background-image: url('images/main_slide1.png'); }
         .slide:nth-child(2) { background-image: url('images/main_slide2.png'); }
         .slide:nth-child(3) { background-image: url('images/main_slide3.png'); }
+        @media (max-width: 768px) {
+        .slide:nth-child(1) { background-image: url('images/main_slide_mobile1.png'); }
+        .slide:nth-child(2) { background-image: url('images/main_slide_mobile2.png'); }
+        .slide:nth-child(3) { background-image: url('images/main_slide_mobile3.png'); }
 
         section { display: none; padding: 40px 5%; min-height: 50vh; }
         section.active { display: block; animation: fadeIn 0.5s; }
