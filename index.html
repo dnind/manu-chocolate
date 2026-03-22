@@ -98,8 +98,8 @@
         /* 스크롤바 숨기기 */
         .insta-slider::-webkit-scrollbar { display: none; }
 
-        .insta-item {
-            flex: 0 0 45%;            /* ✅ 모바일 화면 너비의 45% 차지 */
+       .insta-item {
+            flex: 0 0 22%;            /* ❌ 기존 45%에서 22%로 축소 */
             scroll-snap-align: start;
             aspect-ratio: 1 / 1;
             overflow: hidden;
@@ -130,18 +130,6 @@
             /* 인스타 슬라이더는 media query 밖에 정의된 flex 로직을 따름 */
             .logo { font-size: 20px; }
             nav a { margin-left: 8px; font-size: 11px; }
-        }
-
-        /* 💻 PC 버전에서는 격자로 보여주기 (선택사항) */
-        @media (min-width: 769px) {
-            .insta-slider {
-                display: grid;
-                grid-template-columns: repeat(9, 1fr); /* 9개 한줄 */
-                overflow-x: visible;
-                padding: 0 20px;
-                gap: 10px;
-            }
-            .insta-item { flex: none; width: 100%; }
         }
     </style>
 </head>
