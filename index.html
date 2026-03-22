@@ -48,20 +48,31 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         /* ✨ 제목 & 캐릭터 정렬 스타일 */
-        .section-header { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 15px; 
-            margin-bottom: 30px; 
-        }
-        .section-header h2 { font-size: 28px; font-weight: 900; margin: 0; }
+        .section-header {
+                display: block;        /* ❌ flex 해제 */
+                position: relative;    /* ✅ 캐릭터 배치를 위한 relative 설정 */
+                text-align: center;   /* ✅ 핵심: 텍스트를 화면 중앙으로 정렬 */
+                margin-bottom: 30px; 
+            }
+        .section-header h2 { 
+                margin: 0; 
+                font-size: 28px; 
+                font-weight: 900;
+                display: inline-block; /* z-index 적용을 위해 */
+                position: relative;    /* ✅ z-index 적용을 위해 relative 설정 */
+                z-index: 2;            /* ✅ 캐릭터보다 위로 (제목 우선) */
+                padding-right: 50px;   /* ✅ 캐릭터가 들어갈 자리 확보 (캐릭터 크기에 맞춰 조절) */
+            }
         
         /* 🧸 롱잉베어 캐릭터 스타일 */
         .title-character {
-            height: 80px; /* 제목 높이에 맞춰 조절 */
+            position: absolute;    /* ✅ 절대 배치 설정 */
+            right: 0;              /* ✅ 제목의 오른쪽 끝에 배치 */
+            top: 50%;              /* ✅ 세로 중앙 정렬 */
+            transform: translateY(-50%); /* ✅ 세로 중앙 정렬 보정 */
+            z-index: 1;            /* ✅ 제목보다 아래로 (겹칠 때) */
+            height: 40px;          /* 적당한 크기 */
             width: auto;
-            object-fit: contain;
         }
 
         /* PC용 리뷰 그리드 (기본) */
